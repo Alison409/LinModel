@@ -1,6 +1,6 @@
 ---
 title: "Linear Model with Prediction"
-author: "Dr. J"
+author: "Alison Jimenez"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -23,6 +23,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 data(mtcars)
+require(tigerstats)
+require(favstats)
 ```
 
 # View first 6 rows and summary
@@ -37,7 +39,19 @@ head(mtcars)
 ## data summary
 ### graphical summary
 
+```{r}
+plot(mpg~wt,data=mtcars, pch=19)
+grid()
+```
+
+Type explanation 
+
 ### numerical summary
+
+
+```{r}
+cor(mtcars$wt, mtcars$mpg) 
+```
 
 ### model summary
 
@@ -45,13 +59,14 @@ head(mtcars)
 model1 <- lm(mpg ~ wt, data = mtcars)
 summary(model1)
 ```
+
+
+### predicted mpg
+
 ```{r}
 newData = data.frame(wt=3.050, disp=122)
 print(predict(model1, newData, interval = 'predict'))
 ```
-
-### predicted mpg
-
 # Model 2:
 
  mpg (miles per gallon) is the response (Y)
@@ -60,8 +75,18 @@ print(predict(model1, newData, interval = 'predict'))
 ## data summary
 ### graphical summary
 
+```{r}
+plot(mpg~disp,data=mtcars, pch=19)
+grid()
+```
+
+Type explanation
+
 ### numerical summary
 
+```{r}
+cor(mtcars$disp, mtcars$mpg) 
+```
 ### model summary
 
 
@@ -70,6 +95,10 @@ model2 <- lm(mpg ~ disp, data = mtcars)
 summary(model2)
 ```
 ### predicted mpg 
+
+```{r}
+print(predict(model2, newData, interval = 'predict'))
+```
 
 # Model 3 :
 
@@ -81,7 +110,12 @@ summary(model2)
 ```{r}
 plot(mpg ~ wt+disp, data = mtcars)
 ```
+
+Type explanation
+
 ### numerical summary
+
+No numerical summary for model 3; two regressors 
 
 ### model summary
 model3= lm(mpg ~ wt+disp, data = mtcars)
@@ -100,21 +134,34 @@ summary(model3)
 ```{r}
 plot(mpg ~ wt+disp, data=mtcars)
 ```
+
+Type explanation
+
 ### numerical summary
 
+No numerical summary for model 3; two regressors
+
 ### model summary
+
+```{r}
+model3= lm(mpg ~ wt+disp, data = mtcars)
+summary(model3)
+```
 
 # anova: compare models 2 and 3
 
 model3 <- lm(mpg ~ wt+disp, data = mtcars)
 
 model summary (coefficients, R², etc.)
-
-### predicted mpg
-
 ```{r}
 summary(model3)
 ```
+
+### predicted mpg
+```{r}
+print(predict(model1, newData, interval = 'predict'))
+```
+
 
 ```{r}
 anova_result <- anova(model1, model3)
@@ -122,3 +169,4 @@ print(anova_result)
 ```
 
 # Discussion and Conculsions
+restate, reject null doesnt make differece, 
